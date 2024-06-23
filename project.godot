@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Imposter_Island"
+config/name="Imposter Island"
+config/version="V.1"
 run/main_scene="res://scenes/main_world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://textures/ImposterIslandMainPic.png"
 
 [display]
 
