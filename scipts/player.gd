@@ -14,6 +14,7 @@ var gravity = 9.8
 
 @onready var head = $Head
 @onready var cam = $Head/Camera3D
+@onready var interactable_ray = $Head/RayCast3D
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -47,7 +48,10 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("quit"):
 			$"../".exit_game(name.to_int())
 			get_tree().quit()
-			
+		
+		if Input.is_action_just_pressed("destroy"):
+			rpc("destroy")
+			destroy()
 		
 		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -68,3 +72,9 @@ func _physics_process(delta):
 		cam.fov = lerp(cam.fov, traget_fov, delta * 8.0)
 
 		move_and_slide()
+@rpc("call_remote")
+func destroy():
+	if interactable_ray.is_colliding():
+		var collision = interactable_ray.get_collider()
+		collision.queue_free()
+		
