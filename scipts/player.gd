@@ -15,9 +15,12 @@ var gravity = 9.8
 @onready var head = $Head
 @onready var cam = $Head/Camera3D
 
+func _enter_tree():
+	set_multiplayer_authority(name.to_int())
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	cam.current = is_multiplayer_authority()
 
 
 func _unhandled_input(event):
@@ -27,36 +30,41 @@ func _unhandled_input(event):
 		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
+	if is_multiplayer_authority():
+		# Add the gravity.
+		if not is_on_floor():
+			velocity.y -= gravity * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		# Handle jump.
+		if Input.is_action_just_pressed("Jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 
-	if Input.is_action_pressed("Sprint"):
-		speed = sprint_speed
-	else:
-		speed = WALK_SPEED
-
-
-	var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
-	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if is_on_floor():
-		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
+		if Input.is_action_pressed("Sprint"):
+			speed = sprint_speed
 		else:
-			velocity.x = 0.0
-			velocity.z = 0.0
-	else :
-		velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
-		velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+			speed = WALK_SPEED
+		#quit the game when ctrl and esc are pressed
+		if Input.is_action_just_pressed("quit"):
+			$"../".exit_game(name.to_int())
+			get_tree().quit()
+			
 		
-	
-	var velocity_clamped = clamp(velocity.length(), 0.5, sprint_speed * 2)
-	var traget_fov = Base_Fov + Fov_Change * velocity_clamped
-	cam.fov = lerp(cam.fov, traget_fov, delta * 8.0)
+		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
+		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if is_on_floor():
+			if direction:
+				velocity.x = direction.x * speed
+				velocity.z = direction.z * speed
+			else:
+				velocity.x = 0.0
+				velocity.z = 0.0
+		else :
+			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+			
+		
+		var velocity_clamped = clamp(velocity.length(), 0.5, sprint_speed * 2)
+		var traget_fov = Base_Fov + Fov_Change * velocity_clamped
+		cam.fov = lerp(cam.fov, traget_fov, delta * 8.0)
 
-	move_and_slide()
+		move_and_slide()
