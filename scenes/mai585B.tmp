@@ -65,13 +65,6 @@ offset_right = 211.0
 offset_bottom = 77.0
 placeholder_text = "Enter Ip Adress..."
 
-[node name="MyIp" type="Label" parent="CanvasLayer"]
-offset_left = 221.0
-offset_top = 11.0
-offset_right = 495.0
-offset_bottom = 74.0
-text = "Your IP"
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
 spawn_path = NodePath("..")

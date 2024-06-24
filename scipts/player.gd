@@ -15,6 +15,8 @@ var gravity = 9.8
 @onready var cam = $Head/Camera3D
 @onready var interactable_ray = $Head/RayCast3D
 
+@export var wood_scene : PackedScene
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 
@@ -53,7 +55,8 @@ func _physics_process(delta):
 				var collision = interactable_ray.get_collider()
 				if collision.is_in_group("Palm"):
 					var path = collision.get_path()
-					rpc("destroy_tree", path)
+					var position = collision.global_transform.origin
+					rpc("destroy_tree", path, position)
 
 		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -75,8 +78,13 @@ func _physics_process(delta):
 		move_and_slide()
 
 @rpc("any_peer", "call_local", "reliable")
-func destroy_tree(tree_path):
+func destroy_tree(tree_path, position):
 	var tree = get_node(tree_path)
 	if tree and tree.is_in_group("Palm"):
+		var wood_inst = wood_scene.instantiate()
+		add_sibling(wood_inst)
+		wood_inst.position = position + Vector3(0, 1, 0)
 		tree.queue_free()
 		print("Tree destroyed: %s" % tree_path)
+
+		

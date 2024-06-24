@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c011ipoarasaq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_04h3g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ldn2o"]
+
+[node name="Wood" type="Area3D"]
+gravity_space_override = 1
+
+[node name="WoodMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.157678, 0, 0, 0, 0.157678, 0, 0, 0, 0.157678, 0, 0, 0)
+mesh = SubResource("BoxMesh_04h3g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.157624, 0, 0, 0, 0.157624, 0, 0, 0, 0.157624, 0, 0, 0)
+shape = SubResource("BoxShape3D_ldn2o")
