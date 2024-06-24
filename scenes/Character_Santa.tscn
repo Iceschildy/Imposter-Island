@@ -533,5 +533,6 @@ bones/48/scale = Vector3(1, 1, 1)
 
 [node name="SM_Chr_Santa_01" type="MeshInstance3D" parent="RootNode/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_2srfa")
+lod_bias = 128.0
 mesh = SubResource("ArrayMesh_a8h87")
 skin = SubResource("Skin_03tlh")
