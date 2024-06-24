@@ -72,7 +72,7 @@ func _physics_process(delta):
 		cam.fov = lerp(cam.fov, traget_fov, delta * 8.0)
 
 		move_and_slide()
-@rpc("call_remote")
+@rpc("any_peer","call_local","reliable")
 func destroy():
 	if interactable_ray.is_colliding():
 		var collision = interactable_ray.get_collider()
