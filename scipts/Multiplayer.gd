@@ -11,7 +11,25 @@ var peer = ENetMultiplayerPeer.new()
 func _ready():
 	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	$CanvasLayer/MyIp.text = str(ip)
+	var upnp = UPNP.new()
+	var discover_result = upnp.discover()
 	
+	if discover_result == UPNP.UPNP_RESULT_SUCCESS:
+		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+			var map_result_udp = upnp.add_port_mapping(9999,0, "godot_udp", "UDP", 0)
+			var map_result_tcp = upnp.add_port_mapping(9999,0, "godot_tcp", "TCP", 0)
+			
+			if not map_result_udp == UPNP.UPNP_RESULT_SUCCESS:
+				upnp.add_port_mapping(9999,9999,"", "UPD")
+			if not map_result_tcp == UPNP.UPNP_RESULT_SUCCESS:
+				upnp.add_port_mapping(9999,9999,"", "TCP")
+				
+				
+	var external_ip = upnp.query_external_address()
+	print(external_ip)
+				
+	upnp.delete_port_mapping(9999, "UDP")
+	upnp.delete_port_mapping(9999, "TCP")
 # Handle player connection
 func _on_player_connected(id):
 	print("Player %d connected" % id)

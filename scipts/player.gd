@@ -23,6 +23,10 @@ func _enter_tree():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	cam.current = is_multiplayer_authority()
+	
+
+	
+	
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
