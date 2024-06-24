@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh5x1po42a6bd"
-path.s3tc="res://.godot/imported/ImposterIslandMainPic.png-6dc6bb05a265350f20530d5a8863a32d.s3tc.ctex"
+uid="uid://h805w6mnq4ws"
+path.s3tc="res://.godot/imported/Polygon_Texture_01_A.png-e7704f50f17c09275372f9902de388b8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/ImposterIslandMainPic.png"
-dest_files=["res://.godot/imported/ImposterIslandMainPic.png-6dc6bb05a265350f20530d5a8863a32d.s3tc.ctex"]
+source_file="res://synty/Polygon_Texture_01_A.png"
+dest_files=["res://.godot/imported/Polygon_Texture_01_A.png-e7704f50f17c09275372f9902de388b8.s3tc.ctex"]
 
 [params]
 
