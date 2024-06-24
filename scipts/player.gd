@@ -9,7 +9,6 @@ const sensitivity = 0.003
 const Base_Fov = 75.0
 const Fov_Change = 1.5
 
-
 var gravity = 9.8
 
 @onready var head = $Head
@@ -22,7 +21,6 @@ func _enter_tree():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	cam.current = is_multiplayer_authority()
-
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -44,15 +42,19 @@ func _physics_process(delta):
 			speed = sprint_speed
 		else:
 			speed = WALK_SPEED
-		#quit the game when ctrl and esc are pressed
+		
+		# Quit the game when ctrl and esc are pressed
 		if Input.is_action_just_pressed("quit"):
 			$"../".exit_game(name.to_int())
 			get_tree().quit()
 		
 		if Input.is_action_just_pressed("destroy"):
-			rpc("destroy")
-			destroy()
-		
+			if interactable_ray.is_colliding():
+				var collision = interactable_ray.get_collider()
+				if collision.is_in_group("Palm"):
+					var path = collision.get_path()
+					rpc("destroy_tree", path)
+
 		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if is_on_floor():
@@ -62,19 +64,19 @@ func _physics_process(delta):
 			else:
 				velocity.x = 0.0
 				velocity.z = 0.0
-		else :
+		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
-			
 		
 		var velocity_clamped = clamp(velocity.length(), 0.5, sprint_speed * 2)
-		var traget_fov = Base_Fov + Fov_Change * velocity_clamped
-		cam.fov = lerp(cam.fov, traget_fov, delta * 8.0)
+		var target_fov = Base_Fov + Fov_Change * velocity_clamped
+		cam.fov = lerp(cam.fov, target_fov, delta * 8.0)
 
 		move_and_slide()
-@rpc("any_peer","call_local","reliable")
-func destroy():
-	if interactable_ray.is_colliding():
-		var collision = interactable_ray.get_collider()
-		collision.queue_free()
-		
+
+@rpc("any_peer", "call_local", "reliable")
+func destroy_tree(tree_path):
+	var tree = get_node(tree_path)
+	if tree and tree.is_in_group("Palm"):
+		tree.queue_free()
+		print("Tree destroyed: %s" % tree_path)

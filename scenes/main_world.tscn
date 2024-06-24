@@ -65,7 +65,7 @@ spawn_path = NodePath("..")
 [node name="Palms" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91405, 0.127283, -2.22724)
 
-[node name="Palm_1" type="StaticBody3D" parent="Palms"]
+[node name="Palm_1" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0103516, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_1"]
@@ -75,7 +75,7 @@ shape = SubResource("BoxShape3D_bigcf")
 [node name="palm_tree" parent="Palms/Palm_1" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 
-[node name="Palm_2" type="StaticBody3D" parent="Palms"]
+[node name="Palm_2" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.01859, -0.0103516, 5.25905)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_2"]
@@ -85,7 +85,7 @@ shape = SubResource("BoxShape3D_bigcf")
 [node name="palm_tree" parent="Palms/Palm_2" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 
-[node name="Palm_3" type="StaticBody3D" parent="Palms"]
+[node name="Palm_3" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.728, -0.0103516, 5.25905)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_3"]
@@ -95,7 +95,7 @@ shape = SubResource("BoxShape3D_bigcf")
 [node name="palm_tree" parent="Palms/Palm_3" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 
-[node name="Palm_4" type="StaticBody3D" parent="Palms"]
+[node name="Palm_4" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8467, -0.0103516, -8.64503)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_4"]
@@ -105,7 +105,7 @@ shape = SubResource("BoxShape3D_bigcf")
 [node name="palm_tree" parent="Palms/Palm_4" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 
-[node name="Palm_5" type="StaticBody3D" parent="Palms"]
+[node name="Palm_5" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 0.999866, -0.0163705, 0, 0.0163705, 0.999866, -5.86092, -0.0103516, 11.7766)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_5"]
@@ -115,7 +115,7 @@ shape = SubResource("BoxShape3D_bigcf")
 [node name="palm_tree" parent="Palms/Palm_5" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 
-[node name="Palm_6" type="StaticBody3D" parent="Palms"]
+[node name="Palm_6" type="StaticBody3D" parent="Palms" groups=["Palm"]]
 transform = Transform3D(1, 0, 0, 0, 0.999866, -0.0163705, 0, 0.0163705, 0.999866, -5.86092, -0.0103516, -13.6538)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Palms/Palm_6"]
