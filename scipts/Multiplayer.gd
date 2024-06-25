@@ -1,55 +1,17 @@
-extends Node
+extends Node3D
 
-var peer = ENetMultiplayerPeer.new()
-@export var player_scene : PackedScene
-@export var server_port = 1027
+@onready var main_menu = $CanvasLayer/MainMenu
+@onready var ip = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Ip
 
+const player = preload("res://scenes/Player.tscn")
+const PORT = 9999
+var enet_peer = ENetMultiplayerPeer.new()
 # Called to host the game
 	
 
 # Called to join the game
-func _ready():
-	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-	$CanvasLayer/MyIp.text = str(ip)
-	var upnp = UPNP.new()
-	var discover_result = upnp.discover()
-	
-	if discover_result == UPNP.UPNP_RESULT_SUCCESS:
-		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
-			var map_result_udp = upnp.add_port_mapping(9999,0, "godot_udp", "UDP", 0)
-			var map_result_tcp = upnp.add_port_mapping(9999,0, "godot_tcp", "TCP", 0)
-			
-			if not map_result_udp == UPNP.UPNP_RESULT_SUCCESS:
-				upnp.add_port_mapping(9999,9999,"", "UPD")
-			if not map_result_tcp == UPNP.UPNP_RESULT_SUCCESS:
-				upnp.add_port_mapping(9999,9999,"", "TCP")
-				
-				
-	var external_ip = upnp.query_external_address()
-	print(external_ip)
-				
-	upnp.delete_port_mapping(9999, "UDP")
-	upnp.delete_port_mapping(9999, "TCP")
-# Handle player connection
-func _on_player_connected(id):
-	print("Player %d connected" % id)
-	add_player(id)
 
-# Handle player disconnection
-func _on_player_disconnected(id):
-	print("Player %d disconnected" % id)
-	remove_player(id)
 
-# Add player to the game
-func add_player(id):
-	var player = player_scene.instantiate()
-	player.name = str(id)
-	call_deferred("add_child", player)
-
-# Remove player from the game
-func remove_player(id):
-	if has_node(str(id)):
-		get_node(str(id)).queue_free()
 
 # Handle successful connection to server
 func _on_connected():
@@ -70,29 +32,38 @@ func exit_game(id):
 
 
 func _on_host_pressed():
-	var result = peer.create_server(server_port)
-	if result == OK:
-		multiplayer.multiplayer_peer = peer
-		multiplayer.peer_connected.connect(_on_player_connected)
-		multiplayer.peer_disconnected.connect(_on_player_disconnected)
-		_on_player_connected(1)  # Host player is always peer ID 1
-		print("Server started on port %s" % server_port)
-	else:
-		print("Failed to create server: %s" % result)
-		
+	main_menu.hide()
 	
-
-
+	enet_peer.create_server(PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	multiplayer.peer_connected.connect(add_player)
+	multiplayer.peer_disconnected.connect(remove_player)
+	add_player(multiplayer.get_unique_id())
+	upnp_setup()
 func _on_join_pressed():
-	var ip_address = $CanvasLayer/Ip.get_text()
-	var result = peer.create_client(ip_address, server_port)
-	if result == OK:
-		multiplayer.multiplayer_peer = peer
-		multiplayer.connected_to_server.connect(_on_connected)
-		multiplayer.connection_failed.connect(_on_connection_failed)
-		multiplayer.server_disconnected.connect(_on_disconnected)
-		print("Connected to server at %s" % ip_address)
-		
-	else:
-		print("Failed to connect to server: %s" % result)
+	main_menu.hide()
 	
+	enet_peer.create_client(ip.text, PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	
+func add_player(peer_id):
+	var player = player.instantiate()
+	player.name = str(peer_id)
+	add_child(player)
+func remove_player(peer_id):
+	var player = get_node_or_null(str(peer_id))
+	if player:
+		player.queue_free()
+
+func upnp_setup():
+	var upnp = UPNP.new()
+	
+	var discover_result = upnp.discover()
+	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
+		"UPNP Discover Failed! Error %s" % discover_result)
+
+	var map_result = upnp.add_port_mapping(PORT)
+	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
+		"UPNP Port Mapping Failed! Error %s" % map_result)
+	
+	print("Success! Join Address: %s" % upnp.query_external_address())

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0btlxwfe7yg4"]
+[gd_scene load_steps=10 format=3 uid="uid://d0btlxwfe7yg4"]
 
 [ext_resource type="Texture2D" uid="uid://c0os8gm1xr2w5" path="res://textures/Sand_Texture.png" id="1_6ws26"]
 [ext_resource type="Script" path="res://scipts/Multiplayer.gd" id="1_j7f77"]
+[ext_resource type="PackedScene" uid="uid://cmnh10dm1g38x" path="res://scenes/Player.tscn" id="2_gm5a7"]
 [ext_resource type="PackedScene" uid="uid://bpo1dhnqb6jma" path="res://Assets/palm_tree.glb" id="4_y1dd1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jvb2i"]
@@ -29,6 +30,7 @@ size = Vector3(1, 5.70209, 1)
 
 [node name="Main World" type="Node3D"]
 script = ExtResource("1_j7f77")
+player_scene = ExtResource("2_gm5a7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)

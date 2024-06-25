@@ -29,10 +29,11 @@ func _ready():
 	
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * sensitivity)
-		cam.rotate_x(-event.relative.y * sensitivity)
-		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+	if is_multiplayer_authority():
+		if event is InputEventMouseMotion:
+			head.rotate_y(-event.relative.x * sensitivity)
+			cam.rotate_x(-event.relative.y * sensitivity)
+			cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 		
 func _physics_process(delta):
 	if is_multiplayer_authority():
