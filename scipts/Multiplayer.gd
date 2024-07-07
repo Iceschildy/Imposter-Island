@@ -4,10 +4,9 @@ extends Node3D
 @onready var ip = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Ip
 
 const player = preload("res://scenes/Player.tscn")
-const PORT = 9999
+const PORT = 2096
 var enet_peer = ENetMultiplayerPeer.new()
 # Called to host the game
-	
 
 # Called to join the game
 
@@ -39,11 +38,12 @@ func _on_host_pressed():
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
 	add_player(multiplayer.get_unique_id())
-	upnp_setup()
+
 func _on_join_pressed():
 	main_menu.hide()
 	
 	enet_peer.create_client(ip.text, PORT)
+	print(ip.text)
 	multiplayer.multiplayer_peer = enet_peer
 	
 func add_player(peer_id):
@@ -55,15 +55,4 @@ func remove_player(peer_id):
 	if player:
 		player.queue_free()
 
-func upnp_setup():
-	var upnp = UPNP.new()
-	
-	var discover_result = upnp.discover()
-	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Discover Failed! Error %s" % discover_result)
 
-	var map_result = upnp.add_port_mapping(PORT)
-	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Port Mapping Failed! Error %s" % map_result)
-	
-	print("Success! Join Address: %s" % upnp.query_external_address())
