@@ -5,12 +5,11 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ldn2o"]
 
-[node name="Wood" type="Area3D"]
+[node name="Wood" type="StaticBody3D" groups=["wood"]]
 transform = Transform3D(3.57566, 0, 0, 0, 3.57566, 0, 0, 0, 3.57566, 0, 0, 0)
-gravity_space_override = 1
 script = ExtResource("1_y4c2v")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["wood"]]
 transform = Transform3D(0.157624, 0, 0, 0, 0.157624, 0, 0, 0, 0.157624, 0, 0, 0)
 shape = SubResource("BoxShape3D_ldn2o")
 

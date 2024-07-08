@@ -1,4 +1,4 @@
-extends Area3D
+extends StaticBody3D
 
 
 var gravity_items := 9.8
@@ -11,4 +11,5 @@ func _physics_process(delta):
 		pass
 	else:
 		position.y -= gravity_items * delta
+
 

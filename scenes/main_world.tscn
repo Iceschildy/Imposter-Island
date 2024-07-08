@@ -89,10 +89,6 @@ alignment = 1
 [node name="MyIP" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
-spawn_path = NodePath("..")
-
 [node name="Palms" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91405, 0.127283, -2.22724)
 
@@ -155,6 +151,10 @@ shape = SubResource("BoxShape3D_bigcf")
 
 [node name="palm_tree" parent="Palms/Palm_6" instance=ExtResource("4_y1dd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Palms"]
+_spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
+spawn_path = NodePath("../..")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
