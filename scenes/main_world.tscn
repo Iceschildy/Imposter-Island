@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0btlxwfe7yg4"]
+[gd_scene load_steps=10 format=3 uid="uid://d0btlxwfe7yg4"]
 
 [ext_resource type="Texture2D" uid="uid://c0os8gm1xr2w5" path="res://textures/Sand_Texture.png" id="1_6ws26"]
 [ext_resource type="Script" path="res://scipts/Multiplayer.gd" id="1_j7f77"]
+[ext_resource type="PackedScene" uid="uid://c36s3iuid041o" path="res://scenes/ui_ingame.tscn" id="4_exxch"]
 [ext_resource type="PackedScene" uid="uid://bpo1dhnqb6jma" path="res://Assets/palm_tree.glb" id="4_y1dd1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jvb2i"]
@@ -155,6 +156,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382667, -1.1949, 0)
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Palms"]
 _spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
 spawn_path = NodePath("../..")
+
+[node name="UI Ingame" parent="." instance=ExtResource("4_exxch")]
+position = Vector2(-351, 649)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]

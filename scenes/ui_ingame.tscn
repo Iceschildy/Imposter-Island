@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c36s3iuid041o"]
+
+[ext_resource type="Script" path="res://ui_ingame.gd" id="1_byk13"]
+[ext_resource type="Texture2D" uid="uid://pqjdmlgo3t7r" path="res://textures/Meat Imposter Island V.1.png" id="2_400ah"]
+
+[node name="UI Ingame" type="Node2D"]
+script = ExtResource("1_byk13")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(407, 338)
+rotation = 0.523599
+texture = ExtResource("2_400ah")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0.0784314, 0.215686, 0.772549, 1)
+offset_left = 441.0
+offset_top = 319.0
+offset_right = 772.0
+offset_bottom = 356.0
+value = 100.0
+show_percentage = false
