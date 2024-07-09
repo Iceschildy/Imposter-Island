@@ -15,8 +15,9 @@ var gravity = 9.8
 @onready var cam = $Head/Camera3D
 @onready var interactable_ray = $Head/RayCast3D
 @onready var charater_model = $CollisionShape3D/CharaterModel
-
 @export var wood_scene : PackedScene
+@onready var ui_ingame = $"../UI Ingame"
+
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -24,7 +25,7 @@ func _enter_tree():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	cam.current = is_multiplayer_authority()
-
+	var ui_ingame = get_node("UI Ingame")
 
 func _unhandled_input(event):
 	if is_multiplayer_authority():
@@ -43,7 +44,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("Jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 
-		if Input.is_action_pressed("Sprint"):
+		if Input.is_action_pressed("Sprint") and ui_ingame.can_sprint:
 			speed = sprint_speed
 		else:
 			speed = WALK_SPEED
@@ -67,9 +68,11 @@ func _physics_process(delta):
 			if direction:
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
+				ui_ingame.is_moving = true
 			else:
 				velocity.x = 0.0
 				velocity.z = 0.0
+				ui_ingame.is_moving = false
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)

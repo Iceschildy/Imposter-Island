@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var main_menu = $CanvasLayer/MainMenu
 @onready var ip = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Ip
+@onready var ui_ingame = $"UI Ingame"
 
 const player = preload("res://scenes/Player.tscn")
 const PORT = 2096
@@ -38,14 +39,14 @@ func _on_host_pressed():
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
 	add_player(multiplayer.get_unique_id())
-
+	ui_ingame.show()
 func _on_join_pressed():
 	main_menu.hide()
 	
 	enet_peer.create_client(ip.text, PORT)
 	print(ip.text)
 	multiplayer.multiplayer_peer = enet_peer
-	
+	ui_ingame.show()
 func add_player(peer_id):
 	var player = player.instantiate()
 	player.name = str(peer_id)

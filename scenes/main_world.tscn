@@ -158,6 +158,7 @@ _spawnable_scenes = PackedStringArray("res://scenes/Player.tscn")
 spawn_path = NodePath("../..")
 
 [node name="UI Ingame" parent="." instance=ExtResource("4_exxch")]
+visible = false
 position = Vector2(-351, 649)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
