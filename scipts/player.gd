@@ -20,6 +20,7 @@ var gravity = 9.8
 @export var wood_scene : PackedScene
 @onready var ui_ingame = $"../UI Ingame"
 @onready var health_bar = $"../UI Ingame/Healthbar"
+@onready var character_mesh = $CollisionShape3D/CharaterModel/RootNode/Skeleton3D/SM_Chr_Santa_01
 
 
 func _enter_tree():
@@ -29,6 +30,8 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	cam.current = is_multiplayer_authority()
 	var ui_ingame = get_node("UI Ingame")
+	if is_multiplayer_authority():
+		character_mesh.transparency = 1
 
 func _unhandled_input(event):
 	if is_multiplayer_authority():
