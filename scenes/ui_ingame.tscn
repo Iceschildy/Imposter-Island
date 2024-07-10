@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://c36s3iuid041o"]
+[gd_scene load_steps=5 format=3 uid="uid://c36s3iuid041o"]
 
 [ext_resource type="Script" path="res://ui_ingame.gd" id="1_byk13"]
 [ext_resource type="Texture2D" uid="uid://pqjdmlgo3t7r" path="res://textures/Meat Imposter Island V.1.png" id="2_400ah"]
+[ext_resource type="Texture2D" uid="uid://cnc88fobj1whd" path="res://textures/Hear_Icon.png" id="2_dclqd"]
 [ext_resource type="Texture2D" uid="uid://epb3icffs8fj" path="res://textures/Water Drop V.2.png" id="3_tost0"]
 
 [node name="UI Ingame" type="Node2D"]
 script = ExtResource("1_byk13")
+
+[node name="HealthHeart" type="Sprite2D" parent="."]
+position = Vector2(403, 267)
+scale = Vector2(0.165061, 0.165061)
+texture = ExtResource("2_dclqd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(407, 338)
@@ -33,5 +39,15 @@ offset_left = 441.0
 offset_top = 319.0
 offset_right = 771.0
 offset_bottom = 359.0
+value = 100.0
+show_percentage = false
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+modulate = Color(1, 0.210305, 0.387439, 1)
+z_index = 8
+offset_left = 441.0
+offset_top = 247.0
+offset_right = 771.0
+offset_bottom = 287.0
 value = 100.0
 show_percentage = false

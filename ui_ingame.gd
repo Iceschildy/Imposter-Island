@@ -1,10 +1,11 @@
 extends Node2D
 
 var saturation = 100
-var durst = 100
+var thirst = 100
 
 @onready var progress_bar = $Hungerbar
 @onready var durstl_scher = $"Durstlöscher"
+@onready var healthbar = $Healthbar
 
 var sprinting = false
 var is_moving : bool = false
@@ -29,8 +30,8 @@ func _process(delta):
 		
 	
 	
-	if saturation >= 0:
-		saturation -= 0.05 * delta
+	if saturation > 0:
+		saturation -= 0.5 * delta
 		can_sprint = true
 	
 	if saturation <= 0:
@@ -39,8 +40,9 @@ func _process(delta):
 	progress_bar.value = saturation
 	
 	
+	#bitte englische variabeln: thirst in dem fall
+	if thirst > 0:
+		thirst -= 0.05 * delta
 	
-	if durst >= 0:
-		durst -= 0.05 * delta
+	durstl_scher.value = thirst
 	
-	durstl_scher.value = durst

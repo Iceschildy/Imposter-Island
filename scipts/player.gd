@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+var healt_losing_rate = 1
+var health : float = 100
 var speed 
 const WALK_SPEED = 4.0
 const sprint_speed = 8.0
@@ -17,6 +19,7 @@ var gravity = 9.8
 @onready var charater_model = $CollisionShape3D/CharaterModel
 @export var wood_scene : PackedScene
 @onready var ui_ingame = $"../UI Ingame"
+@onready var health_bar = $"../UI Ingame/Healthbar"
 
 
 func _enter_tree():
@@ -82,7 +85,12 @@ func _physics_process(delta):
 		cam.fov = lerp(cam.fov, target_fov, delta * 8.0)
 		rotate_player_model()
 		move_and_slide()
-
+		
+func _process(delta):
+	if ui_ingame.saturation <= 0 or ui_ingame.thirst <= 0:
+		lose_damage_by_hunger_thirst(delta)
+		
+	health_bar.value = health
 
 @rpc("any_peer", "call_local", "reliable")
 func destroy_tree(tree_path, position):
@@ -111,4 +119,17 @@ func _on_area_3d_body_entered(body):
 		var position = body.global_transform.origin
 		rpc("collect_item", wood_path, position)
 func rotate_player_model():
-	charater_model.rotation.y = head.rotation.y 
+	charater_model.rotation_degrees.y = head.rotation_degrees.y 
+	print("Characthermodel: " + str(charater_model.rotation.y))
+	print("Head rotation" + str(head.rotation.y))
+func lose_damage_by_hunger_thirst(delta):
+	
+	if health > 0:
+		health -= healt_losing_rate * delta
+	if health > 100:
+		health = 100
+
+func die():
+	#Nur platzhalter. Funktion zum sterben muss noch hinzugefügt werden
+	print("Player Died" )
+	
