@@ -32,7 +32,8 @@ func _ready():
 	var ui_ingame = get_node("UI Ingame")
 	if is_multiplayer_authority():
 		character_mesh.transparency = 1
-
+	Global.set_player_reference(self)
+	
 func _unhandled_input(event):
 	if is_multiplayer_authority():
 		if event is InputEventMouseMotion:
@@ -54,7 +55,11 @@ func _physics_process(delta):
 			speed = sprint_speed
 		else:
 			speed = WALK_SPEED
+			
+			
 		
+		if Input.is_action_just_pressed("Inventory"):
+			open_inventory()
 		# Quit the game when ctrl and esc are pressed
 		if Input.is_action_just_pressed("quit"):
 			$"../".exit_game(name.to_int())
@@ -139,3 +144,5 @@ func die():
 	#Nur platzhalter. Funktion zum sterben muss noch hinzugefügt werden
 	print("Player Died" )
 	
+func open_inventory():
+	pass
