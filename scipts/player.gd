@@ -110,9 +110,6 @@ func collect_item(item_path, position):
 	var item = get_node(item_path)
 	if item:
 		item.queue_free()
-		print("+1 Wood")
-	else:
-		print("Wood not found")
 
 func _on_area_3d_body_entered(body):
 	
@@ -121,6 +118,12 @@ func _on_area_3d_body_entered(body):
 		var wood_path = body.get_path()
 		var position = body.global_transform.origin
 		rpc("collect_item", wood_path, position)
+	if body.is_in_group("stick"):
+		var stick_path = body.get_path()
+		var position = body.global_transform.origin
+		rpc("collect_item", stick_path, position)
+		
+		
 func rotate_player_model():
 	charater_model.rotation_degrees.y = head.rotation_degrees.y 
 	print("Characthermodel: " + str(charater_model.rotation.y))

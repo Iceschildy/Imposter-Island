@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d3ph8sxiwcdm3"
-path="res://.godot/imported/Skeleton.glb-561aee7dad7f09d1575fc9bd153df289.scn"
+uid="uid://cima5rp67fk83"
+path="res://.godot/imported/coconut.glb-385623ac4bea4a5a113c843c28977b18.scn"
 
 [deps]
 
-source_file="res://scenes/Skeleton.glb"
-dest_files=["res://.godot/imported/Skeleton.glb-561aee7dad7f09d1575fc9bd153df289.scn"]
+source_file="res://Assets/coconut.glb"
+dest_files=["res://.godot/imported/coconut.glb-385623ac4bea4a5a113c843c28977b18.scn"]
 
 [params]
 
