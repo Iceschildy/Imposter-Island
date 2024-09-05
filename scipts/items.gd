@@ -12,4 +12,3 @@ func _physics_process(delta):
 	else:
 		position.y -= gravity_items * delta
 
-

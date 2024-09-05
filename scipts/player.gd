@@ -32,7 +32,6 @@ func _ready():
 	var ui_ingame = get_node("UI Ingame")
 	if is_multiplayer_authority():
 		character_mesh.transparency = 1
-	Global.set_player_reference(self)
 	
 func _unhandled_input(event):
 	if is_multiplayer_authority():

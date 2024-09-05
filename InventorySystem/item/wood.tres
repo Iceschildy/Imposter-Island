@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://dupdwwh5vohff"]
+
+[ext_resource type="Script" path="res://InventorySystem/item/item_data.gd" id="1_au7os"]
+[ext_resource type="Texture2D" uid="uid://c64pqtlum3qh1" path="res://textures/wood_render.png" id="2_yipxl"]
+
+[resource]
+script = ExtResource("1_au7os")
+name = "Wood"
+description = "A handy resource which can be aquired by destroying trees."
+stackable = true
+texture = ExtResource("2_yipxl")
